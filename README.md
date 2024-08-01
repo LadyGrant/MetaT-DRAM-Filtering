@@ -2,9 +2,11 @@
 How to add expression from metaT to DRAM
 DRAM is designed to tell you genomic potential but not expression. We can run DRAM on a filtered annotation file that is matched with the MetaT to get a product output with expression.
 
-# 1 First we need to filter our annotations file down to the non-zero gene IDs in the metatranscriptomics expression table (geTMM values).
-The annotations file is an output from when DRAM was run on the metaG data
+# 1.) First we need to filter the DRAM annotations.tsv file down to the non-zero ("on" genes) gene IDs in the metatranscriptomics expression table (geTMM values). This will generate two new annotations file for each treatment (CT and ST).
+The metatranscriptomics expression table values are averaged abundance values across each sample for each treatment.
 ```
+# Author: Reed Woyda: reed.woyda@colostate.edu
+
 import pandas as pd
 from concurrent.futures import ProcessPoolExecutor
 import re
@@ -62,5 +64,8 @@ filtered_ct_annotations.to_csv("CT_bins_average.annotations.tsv", sep='\t', inde
 filtered_st_annotations.to_csv("ST_bins_average.annotations.tsv", sep='\t', index=False)
 
 print("Filtering complete. Output files generated.")
-![image](https://github.com/user-attachments/assets/e150c900-51c8-4cad-b700-8e6eacacc888)
 ```
+Your output files include:
+    CT_bins_average.annotations.tsv
+    ST_bins_average.annotations.tsv
+    
