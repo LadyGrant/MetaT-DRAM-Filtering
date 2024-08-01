@@ -66,6 +66,20 @@ filtered_st_annotations.to_csv("ST_bins_average.annotations.tsv", sep='\t', inde
 
 print("Filtering complete. Output files generated.")
 ```
+Slurm scrip to run filter-annotations.py :
+```
+#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --ntasks=40
+#SBATCH --time=14-00:00:00
+#SBATCH --job-name=filter_annotations
+#SBATCH --mail-type=BEGIN,END,FAIL
+#SBATCH --mail-user=eryn.grant@colostate.edu
+#SBATCH --mem=50gb
+#SBATCH --partition=wrighton-hi,wrighton-low
+
+python filter-annotations.py
+```
 Your output files include:
     CT_bins_average.annotations.tsv    
     ST_bins_average.annotations.tsv
