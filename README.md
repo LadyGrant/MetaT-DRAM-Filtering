@@ -84,3 +84,35 @@ Your output files include:
     CT_bins_average.annotations.tsv    
     ST_bins_average.annotations.tsv
     
+# 2) Preparing files for DRAM
+ The two files need labels appended to the gene names' ends before concatenating them. This can be done with awk.
+ ```
+awk 'BEGIN {OFS="\t"} {if (NR==1) {print $0} else {$3=$3"_CT"; print}}' CT_bins_average.annotations.tsv > CT_bins_average.annotations_named.tsv
+awk 'BEGIN {OFS="\t"} {if (NR==1) {print $0} else {$3=$3"_CT"; print}}' ST_bins_average.annotations.tsv > ST_bins_average.annotations_named.tsv
+```
+Concatenating files:
+```
+cat CT_bins_average.annotations_named.tsv ST_bins_average.annotations_named.tsv > CT_ST_bins_average.annotations_named.tsv
+```
+# 3) Run DRAM on new annotations file
+```
+#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --time=14-00:00:00
+#SBATCH --job-name=DRAM_MT
+#SBATCH --mail-type=BEGIN,END,FAIL
+#SBATCH --mail-user=eryn.grant@colostate.edu
+#SBATCH --mem=10gb
+#SBATCH --partition=wrighton-hi,wrighton-low
+
+# activate the DRAM2 environment
+source /opt/Miniconda2/miniconda2/bin/activate DRAM1.4.4
+
+DRAM.py \
+distill \
+-i /home/projects/Agribiome/Kerbel/MetaG/renamed_assemblies/prodigal/DRAM_v1.4.4_95per_80cov_genes/filtered-metaT-DRAM-annotations/CT_ST_bins_average.annotations_named.tsv \
+-o ./ST_CT_combined_metaT_DRAM_distill/DRAM1.4.4-attempt
+```
+
+ 
