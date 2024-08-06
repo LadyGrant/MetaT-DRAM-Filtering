@@ -88,7 +88,7 @@ Your output files include:
  The two files need labels appended to the gene names' ends before concatenating them. This can be done with awk.
  ```
 awk 'BEGIN {OFS="\t"} {if (NR==1) {print $0} else {$3=$3"_CT"; print}}' CT_bins_average.annotations.tsv > CT_bins_average.annotations_named.tsv
-awk 'BEGIN {OFS="\t"} {if (NR==1) {print $0} else {$3=$3"_CT"; print}}' ST_bins_average.annotations.tsv > ST_bins_average.annotations_named.tsv
+awk 'BEGIN {OFS="\t"} {if (NR==1) {print $0} else {$3=$3"_ST"; print}}' ST_bins_average.annotations.tsv > ST_bins_average.annotations_named.tsv
 ```
 Concatenating files:
 ```
